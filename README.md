@@ -132,3 +132,5 @@ docker compose exec yolo streamlit run app/webcam.py --server.address 0.0.0.0 --
 啟動後可在瀏覽器開啟：
 
 http://localhost:8501
+
+即可進入系統介面並開始測試影片或圖片偵測。
