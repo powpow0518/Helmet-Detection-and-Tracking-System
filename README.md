@@ -57,7 +57,7 @@ Please download the `best.pt` file from your storage link (for example Google Dr
 
 `/workspace/runs/weights/`
 
-You can also modify the model path in `web.py` if needed.
+You can also modify the model path in `webcam.py` if needed.
 
 #### 3. Start the Application
 
@@ -65,7 +65,7 @@ From the project root directory, run:
 
 ```bash
 docker compose up -d --build
-docker compose exec yolo streamlit run app/web.py --server.address 0.0.0.0 --server.port 8501
+docker compose exec yolo streamlit run app/webcam.py --server.address 0.0.0.0 --server.port 8501
 ```
 
 After the service starts, open your browser and go to:
@@ -118,7 +118,7 @@ You should then see the Streamlit interface where videos or images can be upload
 
 `/workspace/runs/weights/`
 
-或自行修改 `web.py` 的模型路徑。
+或自行修改 `webcam.py` 的模型路徑。
 
 #### 3. 啟動服務
 
@@ -126,7 +126,7 @@ You should then see the Streamlit interface where videos or images can be upload
 
 ```bash
 docker compose up -d --build
-docker compose exec yolo streamlit run app/web.py --server.address 0.0.0.0 --server.port 8501
+docker compose exec yolo streamlit run app/webcam.py --server.address 0.0.0.0 --server.port 8501
 ```
 
 啟動後可在瀏覽器開啟：
