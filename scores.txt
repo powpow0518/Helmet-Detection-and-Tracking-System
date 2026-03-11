@@ -1,0 +1,5 @@
+yolov8n	0.8578	0.4855	200	20	640	6	3	AdamW	0.001	None	None	None	None	None
+yolo26n	0.7747	0.4585	200	20	640	6	3	AdamW	0.001	None	None	None	None	None
+yolo26s	0.8230	0.4849	200	20	640	6	3	AdamW	0.001	None	None	None	None	None
+yolov8n	0.7918	0.4548	200	20	640	6	3	AdamW	0.001	None	None	None	None	None
+yolo26s	0.7987	0.4643	200	20	640	6	3	AdamW	0.001	None	None	None	None	None

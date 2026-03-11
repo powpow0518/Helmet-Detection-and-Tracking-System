@@ -1,0 +1,18 @@
+services:
+  yolo:
+    build: .
+    volumes:
+      - .:/workspace
+    shm_size: '4gb'
+    env_file:
+      - .env
+    tty: true
+    ports:
+      - "8501:8501"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
