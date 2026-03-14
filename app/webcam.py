@@ -14,6 +14,24 @@ st.sidebar.header("⚙️ 控制台")
 # 讓使用者可以在網頁上自己拖拉設定信心指數！
 conf_threshold = st.sidebar.slider("閥值 (Confidence)", min_value=0.1, max_value=1.0, value=0.5, step=0.05)
 
+st.sidebar.markdown("---")
+st.sidebar.header("🛠️ 進階設定")
+imgsz = st.sidebar.selectbox(
+    "影像解析度 (imgsz)", 
+    options=[640, 960, 1280, 1920], 
+    index=0, 
+    help="遠處安全帽抓不到時，可嘗試調高解析度。注意：數值越大運算越慢。"
+)
+iou_threshold = st.sidebar.slider(
+    "重疊過濾 (IoU)", 
+    min_value=0.1, 
+    max_value=0.9, 
+    value=0.7, 
+    step=0.05,
+    help="數值越低，重疊框過濾越嚴格。用來減少同一物件出現多個框的情況。"
+)
+
+
 # 載入你剛才認可的冠軍模型！(請換成你最終版的 best.pt 路徑)
 @st.cache_resource # 快取模型，避免每次上傳都重新載入
 def load_model():
@@ -50,7 +68,7 @@ if source_type == "📂 上傳檔案 (圖片/影片)":
                         tmp_file.write(uploaded_file.getvalue())
                         tmp_path = tmp_file.name
                     
-                    results = model.predict(source=tmp_path, conf=conf_threshold)
+                    results = model.predict(source=tmp_path, conf=conf_threshold, iou=iou_threshold, imgsz=imgsz)
                     res_plotted = results[0].plot()
                     res_rgb = cv2.cvtColor(res_plotted, cv2.COLOR_BGR2RGB)
                     st.image(res_rgb, width="stretch")
@@ -79,7 +97,7 @@ if source_type == "📂 上傳檔案 (圖片/影片)":
                 ret, frame = cap.read()
                 if not ret: break
                     
-                results = model.track(source=frame, conf=conf_threshold, persist=True, verbose=False)
+                results = model.track(source=frame, conf=conf_threshold, iou=iou_threshold, imgsz=imgsz, persist=True, verbose=False)
                 annotated_frame = results[0].plot()
                 stframe.image(cv2.cvtColor(annotated_frame, cv2.COLOR_BGR2RGB), channels="RGB", width="stretch")
                 
@@ -112,7 +130,7 @@ elif source_type == "🔴 YouTube 即時直播":
         
         try:
             # 🌟 神奇魔法：YOLO 加上 stream=True，就可以像水管一樣源源不絕地接收直播畫面！
-            results = model.track(source=youtube_url, stream=True, conf=conf_threshold, persist=True, verbose=False)
+            results = model.track(source=youtube_url, stream=True, conf=conf_threshold, iou=iou_threshold, imgsz=imgsz, persist=True, verbose=False)
             
             for r in results:
                 # 取得當下這 1 幀畫面
